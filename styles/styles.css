@@ -1,5 +1,16 @@
+body {
+    background-color: gray;
+}
+
 path {
-    stroke: black;
-    stroke-width: 0.1;
     fill: none;
+}
+
+path.outline {
+    stroke: none;
+    stroke-width: 0.1;
+}
+
+path.line {
+    stroke-width: 0.8;
 }
