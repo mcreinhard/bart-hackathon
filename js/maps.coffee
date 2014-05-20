@@ -121,19 +121,90 @@ maps =
     tangent: fremontOutlineTangentMap
 
 route1Map = (t) ->
+  if 0 <= t < 36
+    s = scheduledToAverage t, 1
+    return mapAndOffset s, 'pbp', 0
+  if 36 <= t <= 41
+    s = scheduledToAverage t, 1
+    high = (event.time for event in stations.richmond when event.station is 'MCAR')[0]
+    low = (event.time for event in averageSchedules[1] when event.station is 'MCAR')[0]
+    return mapAndOffset s + (high - low), 'richmond', 1.5
+
 route1TangentMap = (t) ->
+  if 0 <= t < 36
+    s = scheduledToAverage t, 1
+    return maps.pbp.tangent(s)
+  if 36 <= t <= 41
+    s = scheduledToAverage t, 1
+    high = (event.time for event in stations.richmond when event.station is 'MCAR')[0]
+    low = (event.time for event in averageSchedules[1] when event.station is 'MCAR')[0]
+    return maps.richmond.tangent(s + (high - low))
 
 route2Map = (t) ->
 route2TangentMap = (t) ->
 
 route3Map = (t) ->
+  if 0 <= t <= 33
+    s = scheduledToAverage t, 3
+    return mapAndOffset s, 'fremont', -0.5
+  if 33 < t < 36
+    return # TODO
+  if 36 <= t <= 60
+    s = scheduledToAverage(60, 3) - scheduledToAverage(t, 3)
+    return mapAndOffset s, 'richmond', 0.5
+
 route3TangentMap = (t) ->
+  if 0 <= t <= 33
+    s = scheduledToAverage t, 3
+    return maps.fremont.tangent(s)
+  if 33 < t < 36
+    return # TODO
+  if 36 <= t <= 60
+    s = scheduledToAverage(60, 3) - scheduledToAverage(t, 3)
+    return scale -1, maps.richmond.tangent(s)
 
 route4Map = (t) ->
+  if 0 <= t <= 25
+    s = scheduledToAverage t, 4
+    return mapAndOffset s, 'richmond', 0.5
+  if 25 < t < 28
+    return # TODO
+  if 28 <= t <= 61
+    s = scheduledToAverage(61, 4) - scheduledToAverage(t, 4)
+    return mapAndOffset s, 'fremont', -0.5
+
 route4TangentMap = (t) ->
+  if 0 <= t <= 25
+    s = scheduledToAverage t, 4
+    return maps.richmond.tangent(s)
+  if 25 < t < 28
+    return # TODO
+  if 28 <= t <= 61
+    s = scheduledToAverage(61, 4) - scheduledToAverage(t, 4)
+    return scale -1, maps.fremont.tangent(s)
 
 route5Map = (t) ->
+  if 0 <= t <= 33
+    s = scheduledToAverage t, 5
+    return mapAndOffset s, 'fremont', 0.5
+  if 33 < t < 38
+    return # TODO
+  if 38 <= t <= 63
+    dalyCityTime = (event.time for event in stations.sf when event.station is 'DALY')[0]
+    s = scheduledToAverage(63, 5) - scheduledToAverage(t, 5)
+    return mapAndOffset (s + dalyCityTime), 'sf', -1.5
+
+
 route5TangentMap = (t) ->
+  if 0 <= t <= 33
+    s = scheduledToAverage t, 5
+    return maps.fremont.tangent(s)
+  if 33 < t < 38
+    return # TODO
+  if 38 <= t <= 63
+    dalyCityTime = (event.time for event in stations.sf when event.station is 'DALY')[0]
+    s = scheduledToAverage(63, 5) - scheduledToAverage(t, 5)
+    return scale -1, maps.sf.tangent(s + dalyCityTime)
 
 route6Map = (t) ->
 route6TangentMap = (t) ->
@@ -179,7 +250,24 @@ route7TangentMap = (t) ->
     return scale -1, maps.sf.tangent(s)
 
 route11Map = (t) ->
+  if 0 <= t < 17
+    s = scheduledToAverage t, 11
+    return mapAndOffset s, 'dp', 0
+  if 17 <= t <= 33
+    s = scheduledToAverage t, 11
+    high = (event.time for event in stations.fremont when event.station is 'BAYF')[0]
+    low = (event.time for event in averageSchedules[11] when event.station is 'BAYF')[0]
+    return mapAndOffset s + (high - low), 'fremont', -1.5
+
 route11TangentMap = (t) ->
+  if 0 <= t < 17
+    s = scheduledToAverage t, 11
+    return maps.dp.tangent(s)
+  if 17 <= t <= 33
+    s = scheduledToAverage t, 11
+    high = (event.time for event in stations.fremont when event.station is 'BAYF')[0]
+    low = (event.time for event in averageSchedules[11] when event.station is 'BAYF')[0]
+    return maps.fremont.tangent(s + (high - low))
 
 route12Map = (t) ->
 route12TangentMap = (t) ->

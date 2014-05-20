@@ -286,25 +286,195 @@ maps = {
   }
 };
 
-route1Map = function(t) {};
+route1Map = function(t) {
+  var event, high, low, s;
+  if ((0 <= t && t < 36)) {
+    s = scheduledToAverage(t, 1);
+    return mapAndOffset(s, 'pbp', 0);
+  }
+  if ((36 <= t && t <= 41)) {
+    s = scheduledToAverage(t, 1);
+    high = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.richmond;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'MCAR') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    low = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = averageSchedules[1];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'MCAR') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    return mapAndOffset(s + (high - low), 'richmond', 1.5);
+  }
+};
 
-route1TangentMap = function(t) {};
+route1TangentMap = function(t) {
+  var event, high, low, s;
+  if ((0 <= t && t < 36)) {
+    s = scheduledToAverage(t, 1);
+    return maps.pbp.tangent(s);
+  }
+  if ((36 <= t && t <= 41)) {
+    s = scheduledToAverage(t, 1);
+    high = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.richmond;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'MCAR') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    low = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = averageSchedules[1];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'MCAR') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    return maps.richmond.tangent(s + (high - low));
+  }
+};
 
 route2Map = function(t) {};
 
 route2TangentMap = function(t) {};
 
-route3Map = function(t) {};
+route3Map = function(t) {
+  var s;
+  if ((0 <= t && t <= 33)) {
+    s = scheduledToAverage(t, 3);
+    return mapAndOffset(s, 'fremont', -0.5);
+  }
+  if ((33 < t && t < 36)) {
+    return;
+  }
+  if ((36 <= t && t <= 60)) {
+    s = scheduledToAverage(60, 3) - scheduledToAverage(t, 3);
+    return mapAndOffset(s, 'richmond', 0.5);
+  }
+};
 
-route3TangentMap = function(t) {};
+route3TangentMap = function(t) {
+  var s;
+  if ((0 <= t && t <= 33)) {
+    s = scheduledToAverage(t, 3);
+    return maps.fremont.tangent(s);
+  }
+  if ((33 < t && t < 36)) {
+    return;
+  }
+  if ((36 <= t && t <= 60)) {
+    s = scheduledToAverage(60, 3) - scheduledToAverage(t, 3);
+    return scale(-1, maps.richmond.tangent(s));
+  }
+};
 
-route4Map = function(t) {};
+route4Map = function(t) {
+  var s;
+  if ((0 <= t && t <= 25)) {
+    s = scheduledToAverage(t, 4);
+    return mapAndOffset(s, 'richmond', 0.5);
+  }
+  if ((25 < t && t < 28)) {
+    return;
+  }
+  if ((28 <= t && t <= 61)) {
+    s = scheduledToAverage(61, 4) - scheduledToAverage(t, 4);
+    return mapAndOffset(s, 'fremont', -0.5);
+  }
+};
 
-route4TangentMap = function(t) {};
+route4TangentMap = function(t) {
+  var s;
+  if ((0 <= t && t <= 25)) {
+    s = scheduledToAverage(t, 4);
+    return maps.richmond.tangent(s);
+  }
+  if ((25 < t && t < 28)) {
+    return;
+  }
+  if ((28 <= t && t <= 61)) {
+    s = scheduledToAverage(61, 4) - scheduledToAverage(t, 4);
+    return scale(-1, maps.fremont.tangent(s));
+  }
+};
 
-route5Map = function(t) {};
+route5Map = function(t) {
+  var dalyCityTime, event, s;
+  if ((0 <= t && t <= 33)) {
+    s = scheduledToAverage(t, 5);
+    return mapAndOffset(s, 'fremont', 0.5);
+  }
+  if ((33 < t && t < 38)) {
+    return;
+  }
+  if ((38 <= t && t <= 63)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(63, 5) - scheduledToAverage(t, 5);
+    return mapAndOffset(s + dalyCityTime, 'sf', -1.5);
+  }
+};
 
-route5TangentMap = function(t) {};
+route5TangentMap = function(t) {
+  var dalyCityTime, event, s;
+  if ((0 <= t && t <= 33)) {
+    s = scheduledToAverage(t, 5);
+    return maps.fremont.tangent(s);
+  }
+  if ((33 < t && t < 38)) {
+    return;
+  }
+  if ((38 <= t && t <= 63)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(63, 5) - scheduledToAverage(t, 5);
+    return scale(-1, maps.sf.tangent(s + dalyCityTime));
+  }
+};
 
 route6Map = function(t) {};
 
@@ -370,9 +540,77 @@ route7TangentMap = function(t) {
   }
 };
 
-route11Map = function(t) {};
+route11Map = function(t) {
+  var event, high, low, s;
+  if ((0 <= t && t < 17)) {
+    s = scheduledToAverage(t, 11);
+    return mapAndOffset(s, 'dp', 0);
+  }
+  if ((17 <= t && t <= 33)) {
+    s = scheduledToAverage(t, 11);
+    high = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.fremont;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'BAYF') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    low = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = averageSchedules[11];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'BAYF') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    return mapAndOffset(s + (high - low), 'fremont', -1.5);
+  }
+};
 
-route11TangentMap = function(t) {};
+route11TangentMap = function(t) {
+  var event, high, low, s;
+  if ((0 <= t && t < 17)) {
+    s = scheduledToAverage(t, 11);
+    return maps.dp.tangent(s);
+  }
+  if ((17 <= t && t <= 33)) {
+    s = scheduledToAverage(t, 11);
+    high = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.fremont;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'BAYF') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    low = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = averageSchedules[11];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'BAYF') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    return maps.fremont.tangent(s + (high - low));
+  }
+};
 
 route12Map = function(t) {};
 

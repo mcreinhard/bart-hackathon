@@ -7,7 +7,7 @@ path {
 }
 
 path.outline {
-    stroke: black;
+    stroke: none;
     stroke-width: 0.1;
 }
 
@@ -21,6 +21,6 @@ line.station {
 }
 
 text.station {
-    # fill: none;
+    fill: none;
     font-size: 0.7;
 }

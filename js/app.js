@@ -53,18 +53,18 @@ for (routeNum = _j = 1; _j <= 12; routeNum = ++_j) {
         svg.append('circle').attr({
           cx: maps[routeNum].position(t).x,
           cy: maps[routeNum].position(t).y,
-          r: 0.2
+          r: 0.1
         }).style({
           fill: 'black'
         });
         svg.append('line').attr({
           x1: maps[routeNum].position(t).x,
           y1: maps[routeNum].position(t).y,
-          x2: (add(maps[routeNum].position(t), scale(0.5, maps[routeNum].tangent(t)))).x,
-          y2: (add(maps[routeNum].position(t), scale(0.5, maps[routeNum].tangent(t)))).y
+          x2: (add(maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t)))).x,
+          y2: (add(maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t)))).y
         }).style({
           stroke: 'black',
-          'stroke-width': 0.1
+          'stroke-width': 0.06
         });
       }
     }
