@@ -120,8 +120,82 @@ maps =
     position: fremontOutlineMap
     tangent: fremontOutlineTangentMap
 
+route1Map = (t) ->
+route1TangentMap = (t) ->
+
+route2Map = (t) ->
+route2TangentMap = (t) ->
+
+route3Map = (t) ->
+route3TangentMap = (t) ->
+
+route4Map = (t) ->
+route4TangentMap = (t) ->
+
+route5Map = (t) ->
+route5TangentMap = (t) ->
+
+route6Map = (t) ->
+route6TangentMap = (t) ->
+
+route8Map = (t) ->
+  if 0 <= t <= 39
+    s = scheduledToAverage t, 8
+    return mapAndOffset s, 'sf', 1.5
+  if 39 < t < 42
+    return # TODO
+  if 42 <= t <= 66
+    s = scheduledToAverage(66, 8) - scheduledToAverage(t, 8)
+    return mapAndOffset s, 'richmond', -0.5
+
+route8TangentMap = (t) ->
+  if 0 <= t <= 39
+    s = scheduledToAverage t, 8
+    return maps.sf.tangent(s)
+  if 39 < t < 42
+    return # TODO
+  if 42 <= t <= 66
+    s = scheduledToAverage(66, 8) - scheduledToAverage(t, 8)
+    return scale -1, maps.richmond.tangent(s)
+    
+route7Map = (t) ->
+  if 0 <= t <= 24
+    s = scheduledToAverage t, 7
+    return mapAndOffset s, 'richmond', -0.5
+  if 24 < t < 28
+    return # TODO
+  if 28 <= t <= 69
+    s = scheduledToAverage(69, 7) - scheduledToAverage(t, 7)
+    return mapAndOffset s, 'sf', 1.5
+
+route7TangentMap = (t) ->
+  if 0 <= t <= 24
+    s = scheduledToAverage t, 7
+    return maps.richmond.tangent(s)
+  if 24 < t < 28
+    return # TODO
+  if 28 <= t <= 69
+    s = scheduledToAverage(69, 7) - scheduledToAverage(t, 7)
+    return scale -1, maps.sf.tangent(s)
+
+route11Map = (t) ->
+route11TangentMap = (t) ->
+
+route12Map = (t) ->
+route12TangentMap = (t) ->
 
 
+scheduledToAverage = (t, routeNum) ->
+  for event, i in schedules[routeNum]
+    if event.time <= t <= (nextEvent = schedules[routeNum][i+1])?.time
+      linearScale = d3.scale.linear()
+        .domain [event.time, nextEvent.time]
+        .range [averageSchedules[routeNum][i].time, averageSchedules[routeNum][i+1].time]
+      return linearScale t
+  
+mapAndOffset = (t, mapName, offset) ->
+  add(maps[mapName].position(t), scale(offset, rotate90(maps[mapName].tangent(t))))
+  
 
 
 
@@ -132,3 +206,36 @@ add = (u, v) -> {x: u.x + v.x, y: u.y + v.y}
 scale = (c, {x, y}) -> {x: c * x, y: c * y}
 
 subtract = (u, v) -> add u, (scale -1, v)
+
+
+_(maps).extend
+  '1':
+    position: route1Map
+    tangent: route1TangentMap
+  '2':
+    position: route2Map
+    tangent: route2TangentMap
+  '3':
+    position: route3Map
+    tangent: route3TangentMap
+  '4':
+    position: route4Map
+    tangent: route4TangentMap
+  '5':
+    position: route5Map
+    tangent: route5TangentMap
+  '6':
+    position: route6Map
+    tangent: route6TangentMap
+  '7':
+    position: route7Map
+    tangent: route7TangentMap
+  '8':
+    position: route8Map
+    tangent: route8TangentMap
+  '11':
+    position: route11Map
+    tangent: route11TangentMap
+  '12':
+    position: route12Map
+    tangent: route12TangentMap

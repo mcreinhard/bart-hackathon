@@ -306,3 +306,15 @@ stations =
   pbp: (event for event in averageSchedules[1] when event.time < 36)
   dp: (event for event in averageSchedules[11] when event.time < 18)
   fremont: (event for event in averageSchedules[5] when event.time < 34)
+
+for event, i in stations.sf
+  event.width = if i < 4 then [0, 2] else [-2, 2]
+for event, i in stations.richmond
+  event.width = if i < 6 then [-1, 1] else [-1, 2]
+for event, i in stations.pbp
+  event.width = [-0.5, 0.5]
+for event, i in stations.dp
+  event.width = [-0.5, 0.5]
+for event, i in stations.fremont
+  event.width = if i < 4 then [-1, 1] else [-2, 1]
+    

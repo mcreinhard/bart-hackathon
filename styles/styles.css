@@ -21,6 +21,6 @@ line.station {
 }
 
 text.station {
-    fill: none;
-    font-size: 1;
+    # fill: none;
+    font-size: 0.7;
 }
