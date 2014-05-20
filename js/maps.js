@@ -476,9 +476,59 @@ route5TangentMap = function(t) {
   }
 };
 
-route6Map = function(t) {};
+route6Map = function(t) {
+  var dalyCityTime, event, s;
+  if ((0 <= t && t <= 24)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(t, 6);
+    return mapAndOffset(s + dalyCityTime, 'sf', -1.5);
+  }
+  if ((24 < t && t < 30)) {
+    return;
+  }
+  if ((30 <= t && t <= 63)) {
+    s = scheduledToAverage(63, 6) - scheduledToAverage(t, 6);
+    return mapAndOffset(s, 'fremont', 0.5);
+  }
+};
 
-route6TangentMap = function(t) {};
+route6TangentMap = function(t) {
+  var dalyCityTime, event, s;
+  if ((0 <= t && t <= 24)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(t, 6);
+    return maps.sf.tangent(s + dalyCityTime);
+  }
+  if ((24 < t && t < 30)) {
+    return;
+  }
+  if ((30 <= t && t <= 63)) {
+    s = scheduledToAverage(63, 6) - scheduledToAverage(t, 6);
+    return scale(-1, maps.fremont.tangent(s));
+  }
+};
 
 route8Map = function(t) {
   var s;
@@ -541,7 +591,7 @@ route7TangentMap = function(t) {
 };
 
 route11Map = function(t) {
-  var event, high, low, s;
+  var dalyCityTime, event, high, low, s;
   if ((0 <= t && t < 17)) {
     s = scheduledToAverage(t, 11);
     return mapAndOffset(s, 'dp', 0);
@@ -574,10 +624,29 @@ route11Map = function(t) {
     })())[0];
     return mapAndOffset(s + (high - low), 'fremont', -1.5);
   }
+  if ((33 < t && t < 38)) {
+    return;
+  }
+  if ((38 <= t && t <= 63)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(63, 11) - scheduledToAverage(t, 11);
+    return mapAndOffset(s + dalyCityTime, 'sf', -0.5);
+  }
 };
 
 route11TangentMap = function(t) {
-  var event, high, low, s;
+  var dalyCityTime, event, high, low, s;
   if ((0 <= t && t < 17)) {
     s = scheduledToAverage(t, 11);
     return maps.dp.tangent(s);
@@ -610,11 +679,136 @@ route11TangentMap = function(t) {
     })())[0];
     return maps.fremont.tangent(s + (high - low));
   }
+  if ((33 < t && t < 38)) {
+    return;
+  }
+  if ((38 <= t && t <= 63)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(63, 11) - scheduledToAverage(t, 11);
+    return scale(-1, maps.sf.tangent(s + dalyCityTime));
+  }
 };
 
-route12Map = function(t) {};
+route12Map = function(t) {
+  var dalyCityTime, event, high, low, s;
+  if ((0 <= t && t <= 24)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(t, 12);
+    return mapAndOffset(s + dalyCityTime, 'sf', -0.5);
+  }
+  if ((24 < t && t < 30)) {
+    return;
+  }
+  if ((30 <= t && t <= 44)) {
+    s = scheduledToAverage(t, 12);
+    high = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.fremont;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'LAKE') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    low = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = averageSchedules[12];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'LAKE') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    return mapAndOffset(high - (s - low), 'fremont', -1.5);
+  }
+  if ((44 < t && t <= 62)) {
+    s = scheduledToAverage(62, 12) - scheduledToAverage(t, 12);
+    return mapAndOffset(s, 'dp', 0);
+  }
+};
 
-route12TangentMap = function(t) {};
+route12TangentMap = function(t) {
+  var dalyCityTime, event, high, low, s;
+  if ((0 <= t && t <= 24)) {
+    dalyCityTime = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.sf;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'DALY') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    s = scheduledToAverage(t, 12);
+    return maps.sf.tangent(s + dalyCityTime);
+  }
+  if ((24 < t && t < 30)) {
+    return;
+  }
+  if ((30 <= t && t <= 44)) {
+    s = scheduledToAverage(t, 12);
+    high = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = stations.fremont;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'LAKE') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    low = ((function() {
+      var _i, _len, _ref, _results;
+      _ref = averageSchedules[12];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if (event.station === 'LAKE') {
+          _results.push(event.time);
+        }
+      }
+      return _results;
+    })())[0];
+    return scale(-1, maps.fremont.tangent(high - (s - low)));
+  }
+  if ((44 < t && t <= 62)) {
+    s = scheduledToAverage(62, 12) - scheduledToAverage(t, 12);
+    return scale(-1, maps.dp.tangent(s));
+  }
+};
 
 scheduledToAverage = function(t, routeNum) {
   var event, i, linearScale, nextEvent, _i, _len, _ref, _ref1;

@@ -55,7 +55,7 @@ for (routeNum = _j = 1; _j <= 12; routeNum = ++_j) {
           cy: maps[routeNum].position(t).y,
           r: 0.1
         }).style({
-          fill: 'black'
+          fill: 'gray'
         });
         svg.append('line').attr({
           x1: maps[routeNum].position(t).x,
@@ -63,7 +63,7 @@ for (routeNum = _j = 1; _j <= 12; routeNum = ++_j) {
           x2: (add(maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t)))).x,
           y2: (add(maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t)))).y
         }).style({
-          stroke: 'black',
+          stroke: 'gray',
           'stroke-width': 0.06
         });
       }

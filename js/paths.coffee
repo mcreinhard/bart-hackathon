@@ -37,8 +37,8 @@ svg.append 'path'
 # Dublin/Pleasanton Line
 svg.append 'path'
   .attr
-    d: 'M .5 32.5
-      a 9.5 9.5 0 0 1 9.5 -9.5
+    d: 'M 6.136001890779891 23.821318152395293
+      A 9.5 9.5 0 0 1 10 23
       H 32
       a 2 2 0 0 1 2 2
       V 33
@@ -55,8 +55,8 @@ svg.append 'path'
 # Fremont Line
 svg.append 'path'
   .attr
-    d: 'M 1.5 32.5
-      a 8.5 8.5 0 0 1 8.5 -8.5
+    d: 'M 6.542738533855692 24.734863610037895
+      A 8.5 8.5 0 0 1 10 24
       H 31
       a 1 1 0 0 1 1 1
       V 33
