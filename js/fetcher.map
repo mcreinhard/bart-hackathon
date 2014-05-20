@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "fetcher.js",
+  "sourceRoot": "..",
+  "sources": [
+    "js/fetcher.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,IAAA,KAAA;;AAAA,KAAA,GAAQ,IAAR,CAAA;;AAAA,CAEC,CAAC,GAAF,CAAM,oCAAN,EACE;AAAA,EAAA,GAAA,EAAK,YAAL;AAAA,EACA,KAAA,EAAO,CADP;AAAA,EAEA,GAAA,EAAK,qBAFL;CADF,EAG8B,SAAC,IAAD,GAAA;SAAU,KAAA,GAAQ,KAAlB;AAAA,CAH9B,CAFA,CAAA"
+}

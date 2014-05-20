@@ -271,3 +271,38 @@ schedules =
     {time: 59, station: 'WDUB'}
     {time: 62, station: 'DUBL'}
   ]
+
+stationDistances = {}
+for routeNum, schedule of schedules
+  for event, i in schedule
+    if (nextEvent = schedule[i+1])?
+      time = nextEvent.time - event.time
+      (stationDistances["#{event.station}-#{nextEvent.station}"] ?= []).push time
+      (stationDistances["#{nextEvent.station}-#{event.station}"] ?= []).push time
+
+average = (arr) ->
+  result = 0
+  result += val for val in arr
+  result / arr.length
+
+averageDistances = {}
+for stations, distances of stationDistances
+  averageDistances[stations] = average distances
+
+averageSchedules = {}
+for routeNum, schedule of schedules
+  time = 0
+  averageSchedules[routeNum] = [time: time, station: schedule[0].station]
+  for event, i in schedule
+    if (nextEvent = schedule[i+1])?
+      time += averageDistances["#{nextEvent.station}-#{event.station}"]
+      averageSchedules[routeNum].push
+        time: time
+        station: nextEvent.station
+
+stations =
+  sf: (event for event in averageSchedules[8] when event.time < 41)
+  richmond: (event for event in averageSchedules[7] when event.time < 25)
+  pbp: (event for event in averageSchedules[1] when event.time < 36)
+  dp: (event for event in averageSchedules[11] when event.time < 18)
+  fremont: (event for event in averageSchedules[5] when event.time < 34)

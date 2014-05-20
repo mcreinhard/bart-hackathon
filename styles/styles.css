@@ -7,10 +7,20 @@ path {
 }
 
 path.outline {
-    stroke: none;
+    stroke: black;
     stroke-width: 0.1;
 }
 
 path.line {
     stroke-width: 0.8;
+}
+
+line.station {
+    stroke: linen;
+    stroke-width: 0.5;
+}
+
+text.station {
+    fill: none;
+    font-size: 1;
 }
