@@ -42,7 +42,7 @@ for routeNum in [1..12] when maps[routeNum]?.position?
           cy: maps[routeNum].position(t).y
           r: 0.1
         .style
-          fill: 'gray'
+          fill: 'none'
       svg.append 'line'
         .attr
           x1: maps[routeNum].position(t).x
@@ -50,5 +50,132 @@ for routeNum in [1..12] when maps[routeNum]?.position?
           x2: (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).x
           y2: (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).y
         .style
-          stroke: 'gray'
+          stroke: 'none'
           'stroke-width': 0.06
+
+renderTrain = (train) ->
+  t = train.position
+  routeNum = train.route
+  length = train.length
+  trainLine = svg.append 'line'
+    .classed
+      train: true
+  if maps[routeNum].position(t)?
+    trainLine.attr
+      x1: (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t)))?.x || 0
+      y1: (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t)))?.y || 0
+      x2: (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t)))?.x || 0
+      y2: (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t)))?.y || 0
+
+renderTrains = ->
+  svg.selectAll 'line.train'
+    .data trains
+    .enter()
+    .append 'line'
+    .classed train: true
+    .attr
+      x1: (d) ->
+        t = d.position
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).x
+        else
+          0
+      y1: (d) ->
+        t = d.position
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).y
+        else
+          0
+      x2: (d) ->
+        t = d.position
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t))).x
+        else
+          0
+      y2: (d) ->
+        t = d.position
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t))).y
+        else
+          0
+    .transition()
+    .tween 'bart', ->
+      (s) ->
+        d3.select(this).attr
+            x1: (d) ->
+              t = d.position + s * 10
+              routeNum = d.route
+              length = d.length
+              if maps[routeNum].position(t)?
+                (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).x
+              else
+                0
+            y1: (d) ->
+              t = d.position + s * 10
+              routeNum = d.route
+              length = d.length
+              if maps[routeNum].position(t)?
+                (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).y
+              else
+                0
+            x2: (d) ->
+              t = d.position + s * 10
+              routeNum = d.route
+              length = d.length
+              if maps[routeNum].position(t)?
+                (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t))).x
+              else
+                0
+            y2: (d) ->
+              t = d.position + s * 10
+              routeNum = d.route
+              length = d.length
+              if maps[routeNum].position(t)?
+                (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t))).y
+              else
+                0
+    .duration 60000
+    .ease 'linear'
+    .attr
+      x1: (d) ->
+        t = d.position + 10
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).x
+        else
+          0
+      y1: (d) ->
+        t = d.position + 10
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(0.3, maps[routeNum].tangent(t))).y
+        else
+          0
+      x2: (d) ->
+        t = d.position + 10
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t))).x
+        else
+          0
+      y2: (d) ->
+        t = d.position + 10
+        routeNum = d.route
+        length = d.length
+        if maps[routeNum].position(t)?
+          (add maps[routeNum].position(t), scale(-0.3, maps[routeNum].tangent(t))).y
+        else
+          0
+
+
